@@ -3,20 +3,46 @@ var app = new Vue({
     data: {
 
         ussers:[
-            {name:"Juan",
+            {id:0,
+            name:"Juan",
             appointment: 1,
+            telephone: 23454,
+            mail:"juan@gmail.com",
+            salary: 3000000,
             pin:1234 },
 
-            {name:"Camilo",
+            {id:1,
+            name:"Camilo",
             appointment: 2,
-            pin:1234 },
-            {name:"sebas",
-            appointment: 3,
-            pin:1234 },
-            {name:"Camilo",
-            appointment: 4,
+            telephone: 32545466,
+            mail:"camilo@gmail.com",
+            salary: 2000000,
             pin:1234 },
 
+            {id:2,
+            name:"sebas",
+            appointment: 3,
+            telephone: 4565767,
+            mail:"sebas@gmail.com",
+            salary: 2000000,
+            pin:1234 },
+
+            {id:3,
+            name:"carlos",
+            appointment: 4,
+            telephone: 5675355,
+            mail:"carlos@gmail.com",
+            salary: 2500000,
+            pin:1234 },
+
+
+        ],
+
+        appointment:[
+            "Administrador",
+            "Secretario",
+            "Vendedor",
+            "Ensamblador"
 
         ],
 
@@ -27,7 +53,7 @@ var app = new Vue({
         adminCargo: 0,
          
         
-        fecha: this.date(),
+        fecha: "",
 
         zapatosEn: 0,
         cantMax: 12,
@@ -46,6 +72,8 @@ var app = new Vue({
                     switch(this.usserT){
                         case 1:
                             
+                           
+                            console.log(this.usserT)
                             this.page= 1;
                             break;
                         
@@ -67,6 +95,8 @@ var app = new Vue({
 
                     }
 
+                    this.fecha = this.date();
+
                   
 
                     console.log("Bienvenido");
@@ -78,6 +108,14 @@ var app = new Vue({
         logOut: function(){
             this.page = 0;
         },
+        
+        date: function(){
+            let da = new Date();
+
+            let fecha = `Fecha: ${da.getDay()}/${da.getMonth()}/${da.getFullYear()} Hora: ${da.getHours()}:${da.getMinutes()}`
+
+            return fecha;
+        }
 
        
 

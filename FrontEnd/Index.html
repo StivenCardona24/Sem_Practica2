@@ -54,7 +54,7 @@
       <header class="header mb-4 sticky-top"  v-if="page != 0">
         <h1 v-text="usser.appointment"></h1>
         <h2 v-text="usser.name"></h2>
-        <h2 v-text="fecha"></h2>
+        <h5 v-text="fecha"></h5>
 
         <button
           type="button"
@@ -80,9 +80,11 @@
                       <option value="3" >Ensamblador(a)</option>
                     </select>
                     <label for="floatingSelect">Cargo</label>
+
+                    
                   </div>
 
-
+                   <!-- formulario Secretaria -->
                   <div class="info-sec "  v-if="adminCargo == 1">
                     <div class="input-group mb-3">
                         <span class="input-group-text">Salario</span>
@@ -90,10 +92,13 @@
                         <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)">
                         <span class="input-group-text">.00</span>
                     </div>
+                    <div class="col-12">
+                      <button class="btn btn-primary" type="submit">Actualizar</button>
+                    </div>
 
                   </div>
 
-                 
+                 <!-- formulario vendedor -->
                   <div class="info-ven"  v-if="adminCargo == 2">
                     <div class="input-group mb-3">
                         <span class="input-group-text">Salario</span>
@@ -114,10 +119,14 @@
                         <span class="input-group-text">%</span>
                     </div>
 
+                    <div class="col-12">
+                      <button class="btn btn-primary" type="submit">Actualizar</button>
+                    </div>
+
                   </div>
 
                
-
+                  <!-- formulario Ensamblador -->
                   <div class="info-ens mb-3"  v-if="adminCargo == 3">
                     <div class="input-group mb-3">
                         <span class="input-group-text">Salario</span>
@@ -135,7 +144,9 @@
         
                         <label for="floating">Precio de ensable zapatos y zapatillas</label>
                       </div>
-                  
+                      <div class="col-12">
+                        <button class="btn btn-primary" type="submit">Actualizar</button>
+                      </div>
 
                   </div>
                 
@@ -144,6 +155,7 @@
 
               <div class="col ">
 
+                 <!-- formulario Agregar empleado -->
                 <div class="form-agregar">
                 <form class="row g-3 needs-validation" novalidate>
                     <div class="col-md-4">
@@ -224,9 +236,9 @@
             
                 <br>
                   
+              </div>  
             </div>
-                
-              </div>
+
               <div class="row">
                   <div class="col">
                 <table class=" pag-admin-emple table table-striped table-hover ">
@@ -242,13 +254,13 @@
                         </tr>
                     </thead>
                     <tbody >
-                        <tr  class="text-center">
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td ></td>
+                        <tr v-for="(item, index) in ussers" :key="item.id" class="text-center">
+                            <td v-text="item.id"></td>
+                            <td v-text="item.name"></td>
+                            <td v-text="item.telephone"></td>
+                            <td v-text="item.mail"></td>
+                            <td v-text="item.appointment"></td>
+                            <td v-text="item.salary"></td>
                             <td>
                                 <button type="button" class="btn btn-outline-primary mb-3"
                                     @click="bill(item)">Liquidar</button>
