@@ -21,44 +21,45 @@
     <div id="app">
       <!-- Pestaña de login -->
 
-      <main class="container  text-center signIn "  >
+      <main class="container  text-center signIn " v-if="page == 0" >
 
-            <div class="sigIn-formulario">
+            <div class="sigIn-formulario" >
 
               
                 <img src="Images/shoes.png" alt="Icono" class="sigIn-Icon ">
                 <h1 class="sigIn-title mb-3">REGISTRARSE</h1>
 
                 <div class="form-floating mb-3">
-                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example" v-model.number="usserT" required>
                       <option selected>Seleccione el cargo</option>
                       <option value="1">Administrador(a)</option>
                       <option value="2">Secretario(a)</option>
                       <option value="3">Vendedor(a)</option>
-                      <option value="3">Ensamblador(a)</option>
+                      <option value="4">Ensamblador(a)</option>
                     </select>
                     <label for="floatingSelect">Cargo</label>
                   </div>
                   <div class="form-floating mb-4">
-                    <input type="password" maxlength="4" class="form-control" id="floatingPassword" placeholder="Password">
+                    <input type="password" maxlength="4" class="form-control" id="floatingPassword" placeholder="Password" v-model.number="usserP" required>
                     <label for="floatingPassword">PIN</label>
                   </div>
                   <div>
-                  <button type="button" class="btn btn-primary ">INGRESAR</button>
+                  <button type="button" class="btn btn-primary "  @click="login">INGRESAR</button>
                 </div>
             </div>
  
         </main>
 
       <!-- Header General -->
-      <header class="header mb-4 sticky-top" hidden>
-        <h1>Administrador</h1>
-        <h2>"Nombre"</h2>
-        <h2>Fecha:</h2>
+      <header class="header mb-4 sticky-top"  v-if="page != 0">
+        <h1 v-text="usser.appointment"></h1>
+        <h2 v-text="usser.name"></h2>
+        <h2 v-text="fecha"></h2>
 
         <button
           type="button"
           class="btn btn-outline-light material-symbols-outlined"
+          @click="logOut"
         >
           logout
         </button>
@@ -66,23 +67,23 @@
 
       <!-- Pagina administrador -->
 
-      <section class="container " id="pag-admin" hidden >
+      <section class="container " id="pag-admin" v-if="page == 1">
   
             <div class="row ">
               <div class="col">
                 <div class="form-floating pag-admin-info mb-3">
-                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example" v-model.number="adminCargo">
                       <option selected>Seleccione el cargo</option>
                     
-                      <option value="1">Secretario(a)</option>
+                      <option value="1" >Secretario(a)</option>
                       <option value="2">Vendedor(a)</option>
-                      <option value="3">Ensamblador(a)</option>
+                      <option value="3" >Ensamblador(a)</option>
                     </select>
                     <label for="floatingSelect">Cargo</label>
                   </div>
 
 
-                  <div class="info-sec "  hidden>
+                  <div class="info-sec "  v-if="adminCargo == 1">
                     <div class="input-group mb-3">
                         <span class="input-group-text">Salario</span>
                         <span class="input-group-text">$</span>
@@ -91,8 +92,9 @@
                     </div>
 
                   </div>
-                  <br>
-                  <div class="info-ven">
+
+                 
+                  <div class="info-ven"  v-if="adminCargo == 2">
                     <div class="input-group mb-3">
                         <span class="input-group-text">Salario</span>
                         <span class="input-group-text">$</span>
@@ -114,9 +116,9 @@
 
                   </div>
 
-                  <br>
+               
 
-                  <div class="info-ens mb-3" hidden>
+                  <div class="info-ens mb-3"  v-if="adminCargo == 3">
                     <div class="input-group mb-3">
                         <span class="input-group-text">Salario</span>
                         <span class="input-group-text">$</span>
@@ -192,26 +194,30 @@
                       <option value="2">Vendedor(a)</option>
                       <option value="3">Ensamblador(a)</option>
                     </select>
+                    
                    
-                      </select>
+                      
                       <div class="invalid-feedback">
                         Please select a valid state.
                       </div>
                     </div>
-                    
-                    <div class="col-12">
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
-                        <label class="form-check-label" for="invalidCheck">
-                          Agree to terms and conditions
-                        </label>
+
+                    <div class="col-md-6">
+                      <label for="validationCustomUsername" class="form-label">PIN</label>
+                      <div class="input-group has-validation">
+                      
+                        <input type="password" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
                         <div class="invalid-feedback">
-                          You must agree before submitting.
+                          Please choose a username.
                         </div>
                       </div>
                     </div>
+
+                    
+                    
+                    
                     <div class="col-12">
-                      <button class="btn btn-primary" type="submit">Submit form</button>
+                      <button class="btn btn-primary" type="submit">Agregar</button>
                     </div>
                   </form>
                 </div>
@@ -235,8 +241,8 @@
                             <th>Liquidar</th>
                         </tr>
                     </thead>
-                    <tbody v-if="list.length">
-                        <tr v-for="(item, index) in list" :key="item.id" class="text-center">
+                    <tbody >
+                        <tr  class="text-center">
                             <td></td>
                             <td></td>
                             <td></td>
@@ -255,15 +261,83 @@
             </div>
             </div>
              
-            </div>
+            
           
 
        </section>
 
 
-      <!-- Pagina Secretaría -->
+       <!-- Pagina Secretaria -->
 
-      <section class="container" id="pag-ven" hidden>
+       <section class="container" id="pag-sec" v-if="page == 2">
+
+        <div class="row">
+          <div class="col">
+
+
+            <form class="row g-3 needs-validation" novalidate>
+                <div class="form-floating col-md-6">
+                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
+                      <option selected>Id Usuario</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="3">4</option>
+                    </select>
+                    <label for="floatingSelect">Id Usuario</label>
+                  </div>
+                  <div class="form-floating col-md-7">
+                    <input type="number" maxlength="30" class="form-control" id="floatingPassword" placeholder="Password">
+                    <label for="floatingPassword">Cantidad de horas extras: </label>
+                  </div>
+            
+              <div class="col-12">
+                <button class="btn btn-primary" type="submit">
+                 actualizar
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div class="col">
+
+            <table class=" pag-admin-emple table table-striped table-hover ">
+                <thead>
+                    <tr class="text-center">
+                        <th>Usuario</th>
+                        <th>Cargo</th>
+                        
+                        <th>Horas Extras</th>
+                        <th>Opciones</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="text-center">
+                      <!-- v-for="(item, index) in list" :key="item.id"  -->
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        
+                        
+                        <td>
+                            <button type="button" class="btn btn-outline-danger mb-3"
+                                @click="bill(item)">Eliminar</button>
+                        </td>
+                         
+                    </tr>
+                </tbody>
+
+            </table>
+
+
+          </div>
+        </div>
+       </section>
+
+      <!-- Pagina Vendedor -->
+
+      <section class="container" id="pag-ven" v-if="page == 3">
         <div class="row">
           <div class="col">
 
@@ -332,8 +406,9 @@
                         
                     </tr>
                 </thead>
-                <tbody v-if="list.length">
-                    <tr v-for="(item, index) in list" :key="item.id" class="text-center">
+                <tbody >
+                  <!-- v-if="list.length" -->
+                    <tr class="text-center">
                         <td></td>
                         <td></td>
                         <td></td>
@@ -364,7 +439,7 @@
 
 
 <!-- pagina del ensamblador -->
-      <section class="container" id="pag-ens" hidden>
+      <section class="container" id="pag-ens" v-if="page == 4">
         <div class="row">
           <div class="col">
 
@@ -381,8 +456,10 @@
                     <label for="floatingSelect">Id Producto</label>
                   </div>
                   <div class="form-floating col-md-7">
-                    <input type="number" maxlength="30" class="form-control" id="floatingPassword" placeholder="Password">
+                    <input type="number" maxlength="100" class="form-control" id="floatingPassword" placeholder="Password" v-model="zapatosEn" >
+                    <span class="ensam-span" v-if="zapatosEn > cantMax ">Ha superado la cantidad máxima de zapatos</span>
                     <label for="floatingPassword">Cantidad de zapatillas ensambladas</label>
+
                   </div>
             
               <div class="col-12">
@@ -405,8 +482,9 @@
                         
                     </tr>
                 </thead>
-                <tbody v-if="list.length">
-                    <tr v-for="(item, index) in list" :key="item.id" class="text-center">
+                <tbody>
+                    <tr class="text-center">
+                      <!-- v-for="(item, index) in list" :key="item.id"  -->
                         <td></td>
                         <td></td>
                         
@@ -422,16 +500,11 @@
             </table>
 
 
-
-
-
-
-
           </div>
         </div>
       </section>
     </div>
   </body>
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.7.0-alpha.4/vue.js"></script> -->
-  <!-- <script src="js/main.js"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.7.0-alpha.4/vue.js"></script>
+  <script src="../Backend/main.js"></script>
 </html>

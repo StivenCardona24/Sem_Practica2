@@ -4,9 +4,9 @@
 }
 
 :root{
-    --main-color: #b2f1e9;
+    --main-color: #caf8f2;
     --second-color:#00A0FA;
-    --color-head: #4300fa;
+    --color-head: #2e00fa;
 }
 
 body{
@@ -98,4 +98,8 @@ body{
     padding: 10px 25px;
     
     
+}
+
+.ensam-span{
+    color: red;
 }
