@@ -89,11 +89,11 @@
                     <div class="input-group mb-3">
                         <span class="input-group-text">Salario</span>
                         <span class="input-group-text">$</span>
-                        <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)">
+                        <input type="number" class="form-control" aria-label="Amount (to the nearest dollar) " id="salarioSec">
                         <span class="input-group-text">.00</span>
                     </div>
                     <div class="col-12">
-                      <button class="btn btn-primary" type="submit">Actualizar</button>
+                      <button class="btn btn-primary" type="submit" @click="updateSec">Actualizar</button>
                     </div>
 
                   </div>
@@ -103,49 +103,59 @@
                     <div class="input-group mb-3">
                         <span class="input-group-text">Salario</span>
                         <span class="input-group-text">$</span>
-                        <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)">
+                        <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)"  id="salarioVen">
                         <span class="input-group-text">.00</span>
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text">Comisión 1</span>
                         
-                        <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)">
+                        <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)"  id="comision1">
                         <span class="input-group-text">%</span>
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text">Comisión 2</span>
                        
-                        <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)">
+                        <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" id="comision2">
                         <span class="input-group-text">%</span>
                     </div>
 
                     <div class="col-12">
-                      <button class="btn btn-primary" type="submit">Actualizar</button>
+                      <button class="btn btn-primary" type="submit" @click="updateVen">Actualizar</button>
                     </div>
 
                   </div>
 
                
                   <!-- formulario Ensamblador -->
-                  <div class="info-ens mb-3"  v-if="adminCargo == 3">
+                  <div class="info-ens mb-3 row"  v-if="adminCargo == 3">
                     <div class="input-group mb-3">
                         <span class="input-group-text">Salario</span>
                         <span class="input-group-text">$</span>
-                        <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)">
+                        <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" id="salarioEns">
                         <span class="input-group-text">.00</span>
                     </div>
-                    <div class="form-floating mb-4">
-                        <input type="number" class="form-control" id="floatingPassword" placeholder="Password">
-                        <label for="floatingPassword">Cantidad máxima de zapatos y zapatillas</label>
+                    <div class="form-floating mb-4 col-md-6">
+                        <input type="number" class="form-control " id="floatingPassword" id="cantMaxZo">
+                        <label for="floatingPassword">Cantidad máxima de zapatos</label>
                       </div>
-                      <div class="form-floating mb-4">
+                      <div class="form-floating mb-4 col-md-6">
+                        <input type="number" class="form-control" id="floatingPassword" id="cantMaxZa">
+                        <label for="floatingPassword">Cantidad máxima de zapatilla</label>
+                      </div>
+                      <div class="form-floating mb-4 col-md-6">
                           
-                        <input type="number" class="form-control" id="floatingPassword" placeholder="Password">
+                        <input type="number" class="form-control" id="floatingPassword" id="priceZo">
         
-                        <label for="floating">Precio de ensable zapatos y zapatillas</label>
+                        <label for="floating">Precio de ensable zapatos</label>
+                      </div>
+                      <div class="form-floating mb-4 col-md-6">
+                          
+                        <input type="number" class="form-control" id="floatingPassword" id="priceZa">
+        
+                        <label for="floating">Precio de ensable zapatillas</label>
                       </div>
                       <div class="col-12">
-                        <button class="btn btn-primary" type="submit">Actualizar</button>
+                        <button class="btn btn-primary" type="submit" @click="updateEns">Actualizar</button>
                       </div>
 
                   </div>

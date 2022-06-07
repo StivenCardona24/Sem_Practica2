@@ -3,13 +3,18 @@ var app = new Vue({
     data: {
 
         ussers:[
+
+            
             {id:0,
             name:"Juan",
             appointment: 1,
             telephone: 23454,
             mail:"juan@gmail.com",
             salary: 3000000,
-            pin:1234 },
+            pin:1234,
+            // cargo: this.appointment[0],
+            // salario: cargo.salary 
+        },
 
             {id:1,
             name:"Camilo",
@@ -39,17 +44,41 @@ var app = new Vue({
         ],
 
         appointment:[
-            "Administrador",
-            "Secretario",
-            "Vendedor",
-            "Ensamblador"
+            {id: 1,
+            name: "Administrador",
+            salary: 3000000,
+            },
+            {
+                id: 2,
+                name: "Secretario",
+                salary: 2000000,
+            },
+            {
+                id: 3,
+                name: "Vendedor",
+                salary: 2000000,
+                commission1: 10,
+                commission2: 20
+            },
+            {
+                id: 3,
+                name: "Ensamblador",
+                salary: 2500000,
+                cantMaxZo: 10,
+                cantMaxZa: 10,
+                priceZo: 20,
+                priceZa: 20
+            }
+            
+        
+            
 
         ],
 
         usser:"",
         usserT:"",
         usserP:"",
-        page:0,
+        page:1,
         adminCargo: 0,
          
         
@@ -115,12 +144,45 @@ var app = new Vue({
             let fecha = `Fecha: ${da.getDay()}/${da.getMonth()}/${da.getFullYear()} Hora: ${da.getHours()}:${da.getMinutes()}`
 
             return fecha;
+        },
+
+        updateSec: function(){
+            let salario = document.getElementById("salarioSec").value;
+            this.appointment[0].salary = salario;
+            console.log(this.appointment[1].salary);
+        },
+        
+        updateVen(){
+            let salario = document.getElementById("salarioVen").value;
+            let commission1 = document.getElementById("comision1").value;
+            let commission2 = document.getElementById("comision2").value;
+            console.log(this.appointment[2].salary);
+            console.log(this.appointment[2].commission1 );
+            console.log(this.appointment[2].commission2 );
+
+            this.appointment[2].salary = salario;
+            this.appointment[2].commission1 = commission1;
+            this.appointment[2].commission2 = commission2;
+            console.log(this.appointment[2].salary);
+            console.log(this.appointment[2].commission1 );
+            console.log(this.appointment[2].commission2 );
+
+        },
+
+        updateEns(){
+            let salario = document.getElementById("salarioVen").value;
+            let commission1 = document.getElementById("comision1").value;
+            let commission2 = document.getElementById("comision2").value;
+
         }
+
 
        
 
 
     },
+
+
   });
   
     //v-for="i in array" es una directiva de bue que permite recorrer un arreglo
