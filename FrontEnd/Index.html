@@ -31,7 +31,7 @@
 
                 <div class="form-floating mb-3">
                     <select class="form-select" id="floatingSelect" aria-label="Floating label select example" v-model.number="usserT" required>
-                      <option selected>Seleccione el cargo</option>
+                     
                       <option value="1">Administrador(a)</option>
                       <option value="2">Secretario(a)</option>
                       <option value="3">Vendedor(a)</option>
@@ -40,8 +40,9 @@
                     <label for="floatingSelect">Cargo</label>
                   </div>
                   <div class="form-floating mb-4">
-                    <input type="password" maxlength="4" class="form-control" id="floatingPassword" placeholder="Password" v-model.number="usserP" required>
+                    <input type="password" maxlength="4" minlength="4" class="form-control" id="floatingPassword" placeholder="Password" v-model.number="usserP" required>
                     <label for="floatingPassword">PIN</label>
+                    <span style="color: red;" v-if="usserP <= 999">Ingrese un pin correcto</span>
                   </div>
                   <div>
                   <button type="button" class="btn btn-primary "  @click="login">INGRESAR</button>
@@ -52,7 +53,7 @@
 
       <!-- Header General -->
       <header class="header mb-4 sticky-top"  v-if="page != 0">
-        <h1 v-text="usser.appointment"></h1>
+        <h1 v-text="appointment[usser.appointment-1].name"></h1>
         <h2 v-text="usser.name"></h2>
         <h5 v-text="fecha"></h5>
 
@@ -89,7 +90,7 @@
                     <div class="input-group mb-3">
                         <span class="input-group-text">Salario</span>
                         <span class="input-group-text">$</span>
-                        <input type="number" class="form-control" aria-label="Amount (to the nearest dollar) " id="salarioSec">
+                        <input type="number" class="form-control" aria-label="Amount (to the nearest dollar) " id="salarioSec" v-model="appointment[1].salary">
                         <span class="input-group-text">.00</span>
                     </div>
                     <div class="col-12">
@@ -103,19 +104,19 @@
                     <div class="input-group mb-3">
                         <span class="input-group-text">Salario</span>
                         <span class="input-group-text">$</span>
-                        <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)"  id="salarioVen">
+                        <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)"  id="salarioVen" v-model="appointment[2].salary">
                         <span class="input-group-text">.00</span>
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text">Comisión 1</span>
                         
-                        <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)"  id="comision1">
+                        <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)"  id="comision1" v-model="appointment[2].commission1">
                         <span class="input-group-text">%</span>
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text">Comisión 2</span>
                        
-                        <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" id="comision2">
+                        <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" id="comision2" v-model="appointment[2].commission2">
                         <span class="input-group-text">%</span>
                     </div>
 
@@ -131,26 +132,26 @@
                     <div class="input-group mb-3">
                         <span class="input-group-text">Salario</span>
                         <span class="input-group-text">$</span>
-                        <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" id="salarioEns">
+                        <input type="number" class="form-control" aria-label="Amount (to the nearest dollar)" id="salarioEns" v-model="appointment[3].salary">
                         <span class="input-group-text">.00</span>
                     </div>
                     <div class="form-floating mb-4 col-md-6">
-                        <input type="number" class="form-control " id="floatingPassword" id="cantMaxZo">
+                        <input type="number" class="form-control "  id="cantMaxZo" v-model="appointment[3].cantMaxZo">
                         <label for="floatingPassword">Cantidad máxima de zapatos</label>
                       </div>
                       <div class="form-floating mb-4 col-md-6">
-                        <input type="number" class="form-control" id="floatingPassword" id="cantMaxZa">
+                        <input type="number" class="form-control"  id="cantMaxZa" v-model="appointment[3].cantMaxZa">
                         <label for="floatingPassword">Cantidad máxima de zapatilla</label>
                       </div>
                       <div class="form-floating mb-4 col-md-6">
                           
-                        <input type="number" class="form-control" id="floatingPassword" id="priceZo">
+                        <input type="number" class="form-control" id="priceZo" v-model="appointment[3].priceZo">
         
                         <label for="floating">Precio de ensable zapatos</label>
                       </div>
                       <div class="form-floating mb-4 col-md-6">
                           
-                        <input type="number" class="form-control" id="floatingPassword" id="priceZa">
+                        <input type="number" class="form-control"  id="priceZa"  v-model="appointment[3].priceZa">
         
                         <label for="floating">Precio de ensable zapatillas</label>
                       </div>
@@ -269,7 +270,7 @@
                             <td v-text="item.name"></td>
                             <td v-text="item.telephone"></td>
                             <td v-text="item.mail"></td>
-                            <td v-text="item.appointment"></td>
+                            <td v-text="appointment[item.appointment-1].name"></td>
                             <td v-text="item.salary"></td>
                             <td>
                                 <button type="button" class="btn btn-outline-primary mb-3"
@@ -282,6 +283,63 @@
                 </table>
             </div>
             </div>
+
+            <div class="row" v-if="nomina!= null">
+              <div class="col">
+                
+            <div class="card text-center  my-2  " v-if="option == 1" >
+              <h5 class="card-header">NOMINA</h5>
+              <div class="card-body">
+                  <h5 class="card-title  text-center">Nombre: <span v-text="nomina.name"></span></h5>
+                  <p class="card-text"> Cargo: <span v-text="nomina.appointment2"> </span></p>
+                  <p class="card-text"> Salario Básico: <span v-text="nomina.salaryB"> </span></p>
+                  <p class="card-text"> Horas extras: <span v-text="nomina.hourE"> </span></p>
+                  <p class="card-text"> Precio Hora Extra: <span v-text="nomina.priceHourE"> </span></p>
+                  <p class="card-text"> Precio Total Horas Extras: <span v-text="nomina.priceHourT"> </span></p>
+                  <p class="card-text"> Salario Total Neto: <span v-text="nomina.salaryT"> </span></p>
+                  
+              </div>
+          </div>
+          <div class="card text-center  my-2  " v-if="option == 2" >
+            <h5 class="card-header">NOMINA</h5>
+            <div class="card-body">
+                <h5 class="card-title  text-center">Nombre: <span v-text="nomina.name"></span></h5>
+                <p class="card-text"> Cargo: <span v-text="nomina.appointment2"> </span></p>
+                <p class="card-text"> Salario Básico: <span v-text="nomina.salaryB"> </span></p>
+                <p class="card-text"> Total Ventas: <span v-text="nomina.totalV"> </span></p>
+                
+                <p class="card-text"> Comisión: <span v-text="nomina.commission"> </span></p>
+                <p class="card-text"> Auxilio de Transporte: <span v-text="nomina.auxTr"> </span></p>
+              
+                <p class="card-text"> Salario Total Neto: <span v-text="nomina.salaryT"> </span></p>
+                
+            </div>
+        </div>
+
+        <div class="card text-center  my-2  " v-if="option == 3" >
+          <h5 class="card-header">NOMINA</h5>
+          <div class="card-body">
+              <h5 class="card-title  text-center">Nombre: <span v-text="nomina.name"></span></h5>
+              <p class="card-text"> Cargo: <span v-text="nomina.appointment2"> </span></p>
+              <p class="card-text"> Salario Básico: <span v-text="nomina.salaryB"> </span></p>
+              <p class="card-text"> Horas extras: <span v-text="nomina.hourE"> </span></p>
+              <p class="card-text"> Precio Hora Extra: <span v-text="nomina.priceHourE"> </span></p>
+              <p class="card-text"> Precio Total Horas Extras: <span v-text="nomina.priceHourT"> </span></p>
+              <p class="card-text"> Auxilio de Transporte: <span v-text="nomina.auxTr"> </span></p>
+              <p class="card-text"> Total Zapatos Ensamblados: <span v-text="nomina.shoesE1"> </span></p>
+              <p class="card-text"> Incremento por zapatos ensamblados: <span v-text="nomina.aumShoes"> </span></p>
+              <p class="card-text"> Total Zapatillas Ensambladas: <span v-text="nomina.sneakerE1"> </span></p>
+              <p class="card-text"> Incremento por Zapatillas ensambladas: <span v-text="nomina.aumSneaker"> </span></p>
+              <p class="card-text"> Hijos: <span v-text="nomina.sons"> </span></p>
+              <p class="card-text"> Bono por tener hijo(s): <span v-text="nomina.bonos"> </span></p>
+
+              <p class="card-text"> Salario Total Neto: <span v-text="nomina.salaryT"> </span></p>
+              
+          </div>
+      </div>
+              </div>
+            </div>
+
              
             
           
@@ -298,27 +356,27 @@
 
 
             <form class="row g-3 needs-validation" novalidate>
-                <div class="form-floating col-md-6">
-                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                      <option selected>Id Usuario</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="3">4</option>
+                <div class="form-floating col-md-6" >
+                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example" v-model="employee">
+                      <!-- <option selected  >Id Usuario</option> -->
+                      <option v-for="(item, index) in ussers" :value="item"  :key="item.id">{{item.name}}</option>
+                     
                     </select>
-                    <label for="floatingSelect">Id Usuario</label>
+                    <label for="floatingSelect">Nombre del empleado</label>
                   </div>
-                  <div class="form-floating col-md-7">
-                    <input type="number" maxlength="30" class="form-control" id="floatingPassword" placeholder="Password">
+                  <div class="form-floating col-md-7" v-if="employee != null">
+                    <input type="number" maxlength="30" class="form-control" id="floatingPassword" placeholder="Password" v-model="employee.hourE">
                     <label for="floatingPassword">Cantidad de horas extras: </label>
                   </div>
             
-              <div class="col-12">
-                <button class="btn btn-primary" type="submit">
-                 actualizar
-                </button>
-              </div>
+              
             </form>
+            <br>
+            <div class="col-12">
+              <button class="btn btn-primary" type="submit" @click="updateHour()">
+               actualizar
+              </button>
+            </div>
           </div>
 
           <div class="col">
@@ -326,7 +384,8 @@
             <table class=" pag-admin-emple table table-striped table-hover ">
                 <thead>
                     <tr class="text-center">
-                        <th>Usuario</th>
+                        <th>ID</th>
+                        <th>Nombre</th>
                         <th>Cargo</th>
                         
                         <th>Horas Extras</th>
@@ -335,11 +394,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="text-center">
+                    <tr class="text-center" v-for="(item, index) in ussers" :key="item.id" class="text-center">
                       <!-- v-for="(item, index) in list" :key="item.id"  -->
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td v-text="item.id"></td>
+                        <td v-text= "item.name"></td>
+                        <td v-text="appointment[item.appointment-1].name"></td>
+                        <td v-text="item.hourE"></td>
+                        
                         
                         
                         <td>
@@ -393,11 +454,10 @@
             <form class="row g-3 needs-validation" novalidate>
                 <div class="form-floating col-md-4">
                     <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                      <option selected>ID Producto</option>
-                      <option value="1">Administrador(a)</option>
-                      <option value="2">Secretario(a)</option>
-                      <option value="3">Vendedor(a)</option>
-                      <option value="3">Ensamblador(a)</option>
+                      <option selected>Seleccione el Producto</option>
+                      <option value="1">Zapatillas</option>
+                      <option value="2">Zapatos</option>
+                      
                     </select>
                     <label for="floatingSelect">Id Producto</label>
                   </div>
@@ -446,13 +506,10 @@
                 </tbody>
 
             </table>
-
-
-
-
-
-
-
+            <br>
+            <div>
+              <h3>Total Ventas Realizadas: <span v-text="usser.totalV"></span></h3>
+            </div>
           </div>
         </div>
       </section>
@@ -478,11 +535,18 @@
                     <label for="floatingSelect">Id Producto</label>
                   </div>
                   <div class="form-floating col-md-7">
-                    <input type="number" maxlength="100" class="form-control" id="floatingPassword" placeholder="Password" v-model="zapatosEn" >
-                    <span class="ensam-span" v-if="zapatosEn > cantMax ">Ha superado la cantidad máxima de zapatos</span>
+                    <input type="number" maxlength="100" class="form-control" id="floatingPassword" placeholder="Password" v-model.number="shoesEn" >
+                    <span class="ensam-span" v-if="(shoesEn + usser.shoesE) > appointment[usser.appointment-1].cantMaxZo ">Ha superado la cantidad máxima de zapatos</span>
+                    <label for="floatingPassword">Cantidad de zapatos ensamblados</label>
+
+                  </div>
+                  <div class="form-floating col-md-7">
+                    <input type="number" maxlength="100" class="form-control" id="floatingPassword" placeholder="Password" v-model.number="sneakersEn">
+                    <span class="ensam-span"  v-if="(sneakersEn + usser.sneakersE) > appointment[usser.appointment-1].cantMaxZa" >Ha superado la cantidad máxima de zapatillas</span>
                     <label for="floatingPassword">Cantidad de zapatillas ensambladas</label>
 
                   </div>
+                 
             
               <div class="col-12">
                 <button class="btn btn-primary" type="submit">
@@ -520,6 +584,19 @@
                 </tbody>
 
             </table>
+
+            <div>
+              <h4>Cantidad máxima de zapatos que puede ensamblar: <span v-text="appointment[usser.appointment-1].cantMaxZo"></span></h4>
+            </div>
+            <div>
+              <h4>Cantidad máxima de zapatillas que puede ensamblar: <span v-text="appointment[usser.appointment-1].cantMaxZa"></span></h4>
+            </div>
+            <div>
+              <h3>Zapatos Ensamblados: <span v-text="usser.shoesE"></span></h3>
+            </div>
+            <div>
+              <h3>Zapatillas Ensambladas: <span v-text="usser.sneakersE"></span></h3>
+            </div>
 
 
           </div>
