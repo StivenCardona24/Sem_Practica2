@@ -4,6 +4,7 @@ var app = new Vue({
     ussers: [
       {
         id: 0,
+        cc: 43247859,
         name: "Juan",
         appointment: 1,
         telephone: 23454,
@@ -17,6 +18,7 @@ var app = new Vue({
 
       {
         id: 1,
+        cc: 234552,
         name: "Camilo",
         appointment: 2,
         telephone: 32545466,
@@ -28,6 +30,7 @@ var app = new Vue({
 
       {
         id: 2,
+        cc: 345657,
         name: "sebas",
         appointment: 3,
         telephone: 4565767,
@@ -41,6 +44,7 @@ var app = new Vue({
 
       {
         id: 3,
+        cc: 234344,
         name: "carlos",
         appointment: 4,
         telephone: 5675355,
@@ -93,14 +97,25 @@ var app = new Vue({
     page: 0,
     adminCargo: 0,
     employee: null,
-
     fecha: "",
     nomina: null,
     shoesEn: 0,
     sneakersEn: 0,
     cantMax: 12,
+    option: 0,
+    person:{
+      id: "",
+      cc: "",
+      name:"",
+      appointment: 0,
+      telephone:"",
+      mail: "",
+      pin: "",
 
-    option: 0
+
+    },
+
+    sale: 0,
 
   },
   methods: {
@@ -136,7 +151,7 @@ var app = new Vue({
               break;
           }
 
-          this.fecha = this.date();
+         this.date();
 
           console.log("Bienvenido");
         }
@@ -150,9 +165,10 @@ var app = new Vue({
     date: function () {
       let da = new Date();
 
-      let fecha = `Fecha: ${da.getDay()}/${da.getMonth()}/${da.getFullYear()} Hora: ${da.getHours()}:${da.getMinutes()}`;
+      let fecha = `Fecha: ${String(da.getDate()).padStart(2, '0')}/${String(da.getMonth() + 1).padStart(2, '0')}/${da.getFullYear()} Hora: ${da.toLocaleTimeString()}`;
 
-      return fecha;
+      this.fecha = fecha;
+      setTimeout(this.date,100)
     },
 
     updateSec: function () {
@@ -363,6 +379,49 @@ var app = new Vue({
           this.option = 3;
         
     },
+
+    close(){
+      this.option = 0;
+    },
+
+
+    addEmployee(){
+
+      let id = this.ussers.length ;
+      this.person.id = id
+      this.ussers.push(this.person);
+
+
+    },
+
+    addSale(){
+        this.usser.totalV += this.sale;
+    },
+
+    addShoes(){
+      this.usser.shoesE += this.shoesEn;
+
+      this.usser.sneakerE += this.sneakersEn;
+    }
+
+    // (() => {
+    //   'use strict'
+    
+    //   // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    //   const forms = document.querySelectorAll('.needs-validation')
+    
+    //   // Loop over them and prevent submission
+    //   Array.from(forms).forEach(form => {
+    //     form.addEventListener('submit', event => {
+    //       if (!form.checkValidity()) {
+    //         event.preventDefault()
+    //         event.stopPropagation()
+    //       }
+    
+    //       form.classList.add('was-validated')
+    //     }, false)
+    //   })
+    // })()
 
 
 

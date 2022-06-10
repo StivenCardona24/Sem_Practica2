@@ -15,6 +15,7 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
     />
+    
     <title>Sistema de liquidación</title>
   </head>
   <body>
@@ -22,6 +23,7 @@
       <!-- Pestaña de login -->
 
       <main class="container  text-center signIn " v-if="page == 0" >
+        
 
             <div class="sigIn-formulario" >
 
@@ -168,24 +170,18 @@
 
                  <!-- formulario Agregar empleado -->
                 <div class="form-agregar">
-                <form class="row g-3 needs-validation" novalidate>
+                <form class="row g-3 needs-validation mb-3" novalidate>
                     <div class="col-md-4">
-                      <label for="validationCustom01" class="form-label">First name</label>
-                      <input type="text" class="form-control" id="validationCustom01" value="" required>
+                      <label for="validationCustom01" class="form-label" >Full Name</label>
+                      <input type="text" class="form-control" id="validationCustom01" v-model="person.name" required>
                       <div class="valid-feedback">
                         Looks good!
                       </div>
                     </div>
+                    
                     <div class="col-md-4">
-                      <label for="validationCustom02" class="form-label">Last name</label>
-                      <input type="text" class="form-control" id="validationCustom02" value="" required>
-                      <div class="valid-feedback">
-                        Looks good!
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="validationCustom03" class="form-label">Identificacion</label>
-                        <input type="text" class="form-control" id="validationCustom03" required>
+                        <label for="validationCustom03" class="form-label"  >Identificacion</label>
+                        <input type="number" class="form-control" id="validationCustom03" v-model="person.cc" required>
                         <div class="invalid-feedback">
                           Please provide a valid id
                         </div>
@@ -193,7 +189,7 @@
                     
                     <div class="col-md-4">
                       <label for="validationCustom03" class="form-label">Telefono</label>
-                      <input type="text" class="form-control" id="validationCustom03" required>
+                      <input type="number" class="form-control" id="validationCustom03"  v-model="person.telephone" required>
                       <div class="invalid-feedback">
                         Please provide a valid phone
                       </div>
@@ -202,15 +198,15 @@
                         <label for="validationCustomUsername" class="form-label">Email</label>
                         <div class="input-group has-validation">
                         
-                          <input type="text" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+                          <input type="email" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend"  v-model="person.mail" required>
                           <div class="invalid-feedback">
                             Please choose a username.
                           </div>
                         </div>
                       </div>
                     <div class="col-md-5">
-                      <label for="validationCustom04" class="form-label">Cargo</label>
-                      <select class="form-select" id="validationCustom04" required>
+                      <label for="validationCustom04" class="form-label" >Cargo</label>
+                      <select class="form-select" id="validationCustom04" v-model="person.appointment" required>
                         <option selected>Seleccione el cargo</option>
                     
                       <option value="1">Secretario(a)</option>
@@ -226,10 +222,10 @@
                     </div>
 
                     <div class="col-md-6">
-                      <label for="validationCustomUsername" class="form-label">PIN</label>
+                      <label for="validationCustomUsername" class="form-label" >PIN</label>
                       <div class="input-group has-validation">
                       
-                        <input type="password" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+                        <input type="password" class="form-control" maxlength="4" v-model="person.pin" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
                         <div class="invalid-feedback">
                           Please choose a username.
                         </div>
@@ -239,22 +235,24 @@
                     
                     
                     
-                    <div class="col-12">
-                      <button class="btn btn-primary" type="submit">Agregar</button>
-                    </div>
+                    
                   </form>
+                  <div class="col-12">
+                    <button class="btn btn-primary" type="submit" @click="addEmployee">Agregar</button>
+                  </div>
                 </div>
             
                 <br>
                   
               </div>  
             </div>
-
+            <!-- Tabla empleados -->
               <div class="row">
                   <div class="col">
                 <table class=" pag-admin-emple table table-striped table-hover ">
                     <thead>
                         <tr class="text-center">
+                            <th>ID</th>
                             <th>Identificación</th>
                             <th>Nombre</th>
                             <th>Telefono:</th>
@@ -267,6 +265,7 @@
                     <tbody >
                         <tr v-for="(item, index) in ussers" :key="item.id" class="text-center">
                             <td v-text="item.id"></td>
+                            <td v-text="item.cc"></td>
                             <td v-text="item.name"></td>
                             <td v-text="item.telephone"></td>
                             <td v-text="item.mail"></td>
@@ -286,9 +285,11 @@
 
             <div class="row" v-if="nomina!= null">
               <div class="col">
-                
+               
+                <!-- Nomina secretario -->
             <div class="card text-center  my-2  " v-if="option == 1" >
-              <h5 class="card-header">NOMINA</h5>
+              
+              <h5 class="card-header">NOMINA <span style="float: right;"><button @click="close" type="button" class="btn btn-dark"><strong>X</strong></button></span></h5>
               <div class="card-body">
                   <h5 class="card-title  text-center">Nombre: <span v-text="nomina.name"></span></h5>
                   <p class="card-text"> Cargo: <span v-text="nomina.appointment2"> </span></p>
@@ -300,8 +301,10 @@
                   
               </div>
           </div>
+
+          <!-- Nomina vendedor -->
           <div class="card text-center  my-2  " v-if="option == 2" >
-            <h5 class="card-header">NOMINA</h5>
+            <h5 class="card-header">NOMINA<span style="float: right;"><button @click="close" type="button" class="btn btn-dark"><strong>X</strong></button></span></h5>
             <div class="card-body">
                 <h5 class="card-title  text-center">Nombre: <span v-text="nomina.name"></span></h5>
                 <p class="card-text"> Cargo: <span v-text="nomina.appointment2"> </span></p>
@@ -316,8 +319,9 @@
             </div>
         </div>
 
+        <!-- Nomina ensamblador -->
         <div class="card text-center  my-2  " v-if="option == 3" >
-          <h5 class="card-header">NOMINA</h5>
+          <h5 class="card-header">NOMINA <span style="float: right;"><button @click="close" type="button" class="btn btn-dark"><strong>X</strong></button></span></h5>
           <div class="card-body">
               <h5 class="card-title  text-center">Nombre: <span v-text="nomina.name"></span></h5>
               <p class="card-text"> Cargo: <span v-text="nomina.appointment2"> </span></p>
@@ -340,9 +344,6 @@
               </div>
             </div>
 
-             
-            
-          
 
        </section>
 
@@ -389,7 +390,7 @@
                         <th>Cargo</th>
                         
                         <th>Horas Extras</th>
-                        <th>Opciones</th>
+                        
                         
                     </tr>
                 </thead>
@@ -403,10 +404,7 @@
                         
                         
                         
-                        <td>
-                            <button type="button" class="btn btn-outline-danger mb-3"
-                                @click="bill(item)">Eliminar</button>
-                        </td>
+                       
                          
                     </tr>
                 </tbody>
@@ -424,54 +422,20 @@
         <div class="row">
           <div class="col">
 
-            <form class="row g-3 needs-validation">
-             
-                <div class="col-md-6">
-                  <label for="validationCustom01" class="form-label"
-                    >Identificación cliente:</label
-                  >
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="validationCustom01"
-                    value=""
-                    required
-                  />
-                  <div class="valid-feedback">Looks good!</div>
-                </div>
-                <div class="col">
-                    <label for="validationCustom01" class="form-label"
-                    >Proceder a cargar productos</label
-                  >
-                  <button class="btn btn-primary" type="submit">
-                    Cargar Cliente
-                  </button>
-                </div>
-             
-            </form>
-            <br>
 
-            <form class="row g-3 needs-validation" novalidate>
-                <div class="form-floating col-md-4">
-                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                      <option selected>Seleccione el Producto</option>
-                      <option value="1">Zapatillas</option>
-                      <option value="2">Zapatos</option>
-                      
-                    </select>
-                    <label for="floatingSelect">Id Producto</label>
-                  </div>
-                  <div class="form-floating col-md-5">
-                    <input type="password" maxlength="30" class="form-control" id="floatingPassword" placeholder="Password">
-                    <label for="floatingPassword">Cantidad Productos</label>
+           
+                
+                  <div class="form-floating mb-3">
+                    <input type="number" maxlength="30" class="form-control" id="floatingPassword" placeholder="Password" v-model.number="sale">
+                    <label for="floatingPassword">Total Venta Realizada</label>
                   </div>
             
-              <div class="col-12">
-                <button class="btn btn-primary" type="submit">
+             
+                <button class="btn btn-primary" type="submit" @click="addSale">
                  Agregar
                 </button>
-              </div>
-            </form>
+          
+            
           </div>
 
           <div class="col">
@@ -479,37 +443,22 @@
             <table class=" pag-admin-emple table table-striped table-hover ">
                 <thead>
                     <tr class="text-center">
-                        <th>Producto</th>
-                        <th>Precio</th>
-                        <th>Descuento</th>
-                        <th>Unidades</th>
-                        <th>Total</th>
-                        <th>Opciones</th>
+                        <th>TOTAL VALOR VENTAS</th>
+                        
                         
                     </tr>
                 </thead>
                 <tbody >
                   <!-- v-if="list.length" -->
                     <tr class="text-center">
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td v-text="usser.totalV"></td>
                         
-                        <td>
-                            <button type="button" class="btn btn-outline-danger mb-3"
-                                @click="bill(item)">Eliminar</button>
-                        </td>
                          
                     </tr>
                 </tbody>
 
             </table>
-            <br>
-            <div>
-              <h3>Total Ventas Realizadas: <span v-text="usser.totalV"></span></h3>
-            </div>
+            
           </div>
         </div>
       </section>
@@ -523,24 +472,15 @@
           <div class="col">
 
 
-            <form class="row g-3 needs-validation" novalidate>
-                <div class="form-floating col-md-6">
-                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example">
-                      <option selected>ID Producto zapatilla</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="3">4</option>
-                    </select>
-                    <label for="floatingSelect">Id Producto</label>
-                  </div>
-                  <div class="form-floating col-md-7">
+          
+               
+                  <div class="form-floating col-md-7 mb-3">
                     <input type="number" maxlength="100" class="form-control" id="floatingPassword" placeholder="Password" v-model.number="shoesEn" >
                     <span class="ensam-span" v-if="(shoesEn + usser.shoesE) > appointment[usser.appointment-1].cantMaxZo ">Ha superado la cantidad máxima de zapatos</span>
                     <label for="floatingPassword">Cantidad de zapatos ensamblados</label>
 
                   </div>
-                  <div class="form-floating col-md-7">
+                  <div class="form-floating col-md-7 mb-3">
                     <input type="number" maxlength="100" class="form-control" id="floatingPassword" placeholder="Password" v-model.number="sneakersEn">
                     <span class="ensam-span"  v-if="(sneakersEn + usser.sneakersE) > appointment[usser.appointment-1].cantMaxZa" >Ha superado la cantidad máxima de zapatillas</span>
                     <label for="floatingPassword">Cantidad de zapatillas ensambladas</label>
@@ -549,11 +489,11 @@
                  
             
               <div class="col-12">
-                <button class="btn btn-primary" type="submit">
+                <button class="btn btn-primary" type="submit" @click="addShoes">
                  Agregar
                 </button>
               </div>
-            </form>
+           
           </div>
 
           <div class="col">
@@ -562,41 +502,39 @@
                 <thead>
                     <tr class="text-center">
                         <th>Producto</th>
-                        <th>Unidades</th>
+                        <th>Unidades Ensambladas</th>
+                        <th>Unidades Máximas</th>
                         
-                        <th>Opciones</th>
+                       
                         
                     </tr>
                 </thead>
                 <tbody>
+
+                  <tr class="text-center">
+                    <td >Zapatos</td>
+                      <td v-text="usser.shoesE"></td>
+                      
+                      
+                      <td v-text="appointment[usser.appointment-1].cantMaxZo"></td>
+
+                  </tr>
                     <tr class="text-center">
                       <!-- v-for="(item, index) in list" :key="item.id"  -->
-                        <td></td>
-                        <td></td>
+                        <td >Zapatillas</td>
+                        <td v-text="usser.sneakersE"></td>
                         
                         
-                        <td>
-                            <button type="button" class="btn btn-outline-danger mb-3"
-                                @click="bill(item)">Eliminar</button>
-                        </td>
+                        <td v-text="appointment[usser.appointment-1].cantMaxZa"></td>
+                       
                          
                     </tr>
+
+                   
                 </tbody>
 
             </table>
 
-            <div>
-              <h4>Cantidad máxima de zapatos que puede ensamblar: <span v-text="appointment[usser.appointment-1].cantMaxZo"></span></h4>
-            </div>
-            <div>
-              <h4>Cantidad máxima de zapatillas que puede ensamblar: <span v-text="appointment[usser.appointment-1].cantMaxZa"></span></h4>
-            </div>
-            <div>
-              <h3>Zapatos Ensamblados: <span v-text="usser.shoesE"></span></h3>
-            </div>
-            <div>
-              <h3>Zapatillas Ensambladas: <span v-text="usser.sneakersE"></span></h3>
-            </div>
 
 
           </div>
