@@ -22,11 +22,11 @@
     <div id="app">
       <!-- Pestaña de login -->
 
-      <main class="container  text-center signIn " v-if="page == 0" >
+      <main class="container " v-if="page == 0" >
         
 
-            <div class="sigIn-formulario" >
-
+            <div class="abs-center" >
+              <div   class="border p-3 form text-center" >
               
                 <img src="Images/shoes.png" alt="Icono" class="sigIn-Icon ">
                 <h1 class="sigIn-title mb-3">REGISTRARSE</h1>
@@ -44,12 +44,14 @@
                   <div class="form-floating mb-4">
                     <input type="password" maxlength="4" minlength="4" class="form-control" id="floatingPassword" placeholder="Password" v-model.number="usserP" required>
                     <label for="floatingPassword">PIN</label>
-                    <span style="color: red;" v-if="usserP <= 999">Ingrese un pin correcto</span>
+                    <span style="color: red;" v-if="x">Ingrese un pin correcto</span>
                   </div>
                   <div>
                   <button type="button" class="btn btn-primary "  @click="login">INGRESAR</button>
                 </div>
             </div>
+            </div>
+
  
         </main>
 

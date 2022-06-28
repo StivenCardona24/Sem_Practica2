@@ -116,6 +116,7 @@ var app = new Vue({
     },
 
     sale: 0,
+    x : false,
 
   },
   methods: {
@@ -126,6 +127,10 @@ var app = new Vue({
         return;
       }
 
+      if(this.usserP <= 999){
+        this.x = true;
+
+      }
       this.ussers.forEach((usuario) => {
         if (usuario.appointment == this.usserT && usuario.pin == this.usserP) {
           this.usser = usuario;
@@ -152,10 +157,14 @@ var app = new Vue({
           }
 
          this.date();
+         this.x = false;
 
           console.log("Bienvenido");
         }
       });
+      if(this.usser == ""){
+        alert("Datos Incorrectos");
+      }
     },
 
     logOut: function () {
